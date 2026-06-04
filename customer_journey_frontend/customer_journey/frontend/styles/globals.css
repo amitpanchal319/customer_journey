@@ -1,0 +1,360 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens: Olive & Beach ───────────────────────────────────────────── */
+:root {
+  --font-display : 'Space Grotesk', sans-serif;
+  --font-body    : 'DM Sans', sans-serif;
+  --font-mono    : 'JetBrains Mono', monospace;
+
+  /* Light mode — warm beach sand & olive grove */
+  --bg-base       : #F4F1E8;   /* sun-bleached sand */
+  --bg-card       : #FEFCF5;   /* warm white parchment */
+  --bg-subtle     : #ECE8DC;   /* sand dune */
+  --bg-hover      : #E2DDD0;   /* deeper dune */
+  --sidebar-bg    : #EEEAE0;   /* sidebar: warmer than base */
+
+  --border        : #D6D0C0;
+  --border-strong : #BEB79E;
+
+  --text-primary  : #1C1A12;   /* warm dark ink */
+  --text-secondary: #58523C;   /* muted olive-brown */
+  --text-muted    : #96906C;   /* sandy muted */
+
+  /* Primary accent: olive green */
+  --accent        : #617038;
+  --accent-hover  : #4E5C2C;
+  --accent-light  : #E2ECC8;
+  --accent-subtle : #F0F5E4;
+
+  /* Secondary accent: beach sand gold */
+  --sand          : #B89650;
+  --sand-light    : #F8F0DC;
+  --sand-dark     : #967840;
+
+  /* Semantic colours — warm-tuned */
+  --green         : #3A6E34;
+  --green-light   : #DAF0D0;
+  --amber         : #A07A10;
+  --amber-light   : #F8EED0;
+  --red           : #B84040;
+  --red-light     : #FBE4E0;
+  --purple        : #725490;
+  --purple-light  : #EAE4F4;
+  --teal          : #287A6E;
+  --teal-light    : #D0EEE8;
+
+  /* Shadows — warm-tinted */
+  --shadow-sm    : 0 1px 3px rgba(28,26,14,0.07), 0 1px 2px rgba(28,26,14,0.04);
+  --shadow-md    : 0 4px 16px rgba(28,26,14,0.09), 0 2px 4px rgba(28,26,14,0.05);
+  --shadow-lg    : 0 12px 40px rgba(28,26,14,0.12), 0 4px 8px rgba(28,26,14,0.06);
+}
+
+.dark {
+  /* Dark mode — midnight olive */
+  --bg-base       : #10130D;
+  --bg-card       : #171C12;
+  --bg-subtle     : #1F2618;
+  --bg-hover      : #293220;
+  --sidebar-bg    : #131710;
+
+  --border        : #2A341C;
+  --border-strong : #3C4C26;
+
+  --text-primary  : #ECE8D4;   /* warm cream */
+  --text-secondary: #A4A07A;   /* warm olive-sand */
+  --text-muted    : #585840;
+
+  --accent        : #8CAE40;   /* bright olive for dark bg */
+  --accent-hover  : #A4C858;
+  --accent-light  : #1A2410;
+  --accent-subtle : #141C0C;
+
+  --sand          : #C0A050;
+  --sand-light    : #28200A;
+  --sand-dark     : #E0BC6A;
+
+  --green         : #54BA58;
+  --green-light   : #0C2610;
+  --amber         : #DCA838;
+  --amber-light   : #261E08;
+  --red           : #F07070;
+  --red-light     : #2A0A0A;
+  --purple        : #B07CD0;
+  --purple-light  : #1C0A32;
+  --teal          : #38C0B0;
+  --teal-light    : #041E1A;
+
+  --shadow-sm    : 0 1px 3px rgba(0,0,0,0.32);
+  --shadow-md    : 0 4px 16px rgba(0,0,0,0.42);
+  --shadow-lg    : 0 12px 40px rgba(0,0,0,0.58);
+}
+
+/* ── Base reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family    : var(--font-body);
+  background     : var(--bg-base);
+  color          : var(--text-primary);
+  transition     : background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height     : 100dvh;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Focus ring ─────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────────── */
+.card {
+  background    : var(--bg-card);
+  border        : 1px solid var(--border);
+  border-radius : 14px;
+  transition    : border-color 0.2s, box-shadow 0.2s;
+  box-shadow    : var(--shadow-sm);
+}
+.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+
+/* Premium card variant — subtle top accent stripe */
+.card-premium {
+  background    : var(--bg-card);
+  border        : 1px solid var(--border);
+  border-radius : 14px;
+  box-shadow    : var(--shadow-sm);
+  overflow      : hidden;
+  position      : relative;
+}
+.card-premium::before {
+  content        : '';
+  position       : absolute;
+  top            : 0; left: 0; right: 0;
+  height         : 2px;
+  background     : linear-gradient(90deg, var(--accent) 0%, var(--sand) 100%);
+  opacity        : 0.7;
+}
+
+/* ── Badges ─────────────────────────────────────────────────────────────────── */
+.badge {
+  display        : inline-flex;
+  align-items    : center;
+  padding        : 3px 10px;
+  border-radius  : 20px;
+  font-size      : 11px;
+  font-weight    : 600;
+  letter-spacing : 0.03em;
+  white-space    : nowrap;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────────── */
+.btn-primary {
+  background    : var(--accent);
+  color         : #fff;
+  padding       : 9px 18px;
+  border-radius : 8px;
+  font-size     : 13px;
+  font-weight   : 600;
+  border        : none;
+  cursor        : pointer;
+  transition    : background 0.2s, transform 0.1s, box-shadow 0.2s;
+  min-height    : 38px;
+  white-space   : nowrap;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover  { background: var(--accent-hover); box-shadow: 0 4px 14px rgba(97,112,56,0.38); }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-ghost {
+  background    : transparent;
+  color         : var(--text-secondary);
+  padding       : 9px 14px;
+  border-radius : 8px;
+  font-size     : 13px;
+  font-weight   : 500;
+  border        : 1px solid var(--border);
+  cursor        : pointer;
+  transition    : all 0.2s;
+  min-height    : 38px;
+  white-space   : nowrap;
+}
+.btn-ghost:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
+.btn-ghost:active { transform: scale(0.97); }
+
+.btn-sand {
+  background    : var(--sand-light);
+  color         : var(--sand-dark);
+  padding       : 9px 18px;
+  border-radius : 8px;
+  font-size     : 13px;
+  font-weight   : 600;
+  border        : 1px solid rgba(184,150,80,0.3);
+  cursor        : pointer;
+  transition    : all 0.2s;
+  min-height    : 38px;
+}
+.btn-sand:hover { background: var(--sand); color: #fff; }
+
+/* ── Input ──────────────────────────────────────────────────────────────────── */
+.input {
+  background    : var(--bg-subtle);
+  border        : 1.5px solid var(--border);
+  border-radius : 8px;
+  padding       : 9px 14px;
+  font-size     : 14px;
+  font-family   : var(--font-body);
+  color         : var(--text-primary);
+  outline       : none;
+  transition    : border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  width         : 100%;
+  min-height    : 42px;
+}
+.input:focus {
+  border-color  : var(--accent);
+  box-shadow    : 0 0 0 3px var(--accent-light);
+  background    : var(--bg-card);
+}
+.input::placeholder { color: var(--text-muted); }
+
+/* ── Stat icon colours ──────────────────────────────────────────────────────── */
+.stat-blue   { background: var(--accent-light);  color: var(--accent); }
+.stat-green  { background: var(--green-light);   color: var(--green); }
+.stat-amber  { background: var(--amber-light);   color: var(--amber); }
+.stat-red    { background: var(--red-light);     color: var(--red); }
+.stat-purple { background: var(--purple-light);  color: var(--purple); }
+.stat-teal   { background: var(--teal-light);    color: var(--teal); }
+.stat-sand   { background: var(--sand-light);    color: var(--sand-dark); }
+
+/* ── Stat card CSV download hint ────────────────────────────────────────────── */
+.stat-card-csv { opacity: 0.55; transition: opacity .18s ease, color .18s ease; }
+.stat-card-hover:hover .stat-card-csv { opacity: 1; color: var(--accent); }
+
+/* ── Segment breakdown CSV button ───────────────────────────────────────────── */
+.seg-export-btn { transition: color .15s ease, border-color .15s ease, background .15s ease; }
+.seg-export-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+
+/* ── RFM segment badge colours ──────────────────────────────────────────────── */
+.seg-champion   { background: #FBF2D0; color: #7A5C00; }
+.seg-loyal      { background: #DAF0CC; color: #285C24; }
+.seg-new        { background: #DCEEf8; color: #1A4888; }
+.seg-promising  { background: #EAE4F4; color: #523880; }
+.seg-need       { background: #F8ECD8; color: #843810; }
+.seg-risk       { background: #F8E4E0; color: #8A2828; }
+.seg-cannot     { background: #F6E2EE; color: #7A2658; }
+.seg-lost       { background: #ECE6D4; color: #564E38; }
+.seg-occasional { background: #DCF0E0; color: #245A30; }
+
+.dark .seg-champion   { background: #26200A; color: #DCA838; }
+.dark .seg-loyal      { background: #0C2210; color: #54BA58; }
+.dark .seg-new        { background: #0A1C2C; color: #5CA8E0; }
+.dark .seg-promising  { background: #1C0C32; color: #B07CD0; }
+.dark .seg-need       { background: #261408; color: #F07840; }
+.dark .seg-risk       { background: #280808; color: #F07070; }
+.dark .seg-cannot     { background: #260818; color: #E070A0; }
+.dark .seg-lost       { background: #1E1C12; color: #908060; }
+.dark .seg-occasional { background: #081C10; color: #38C090; }
+
+/* ── Skeleton shimmer ───────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--bg-subtle) 25%,
+    var(--bg-hover)  50%,
+    var(--bg-subtle) 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.6s ease infinite;
+  border-radius: 6px;
+}
+
+/* ── Page content responsive padding ───────────────────────────────────────── */
+.page-content {
+  padding   : 32px 36px;
+  max-width : 1400px;
+  margin    : 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .page-content { padding: 24px 24px; }
+}
+
+@media (max-width: 767px) {
+  .page-content { padding: 16px 14px; }
+  .card { border-radius: 10px; }
+  .btn-primary, .btn-ghost { min-height: 44px; padding: 10px 16px; font-size: 14px; }
+  .input { min-height: 46px; font-size: 16px; /* prevents iOS zoom */ }
+  .badge { font-size: 10px; padding: 2px 8px; }
+}
+
+/* ── Responsive grid helpers ────────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+.stats-grid > * { min-width: 0; }
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+/* Dashboard stat row: 6 cards in one row on desktop, collapsing gracefully */
+.stats-grid--dash { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1024px) { .stats-grid--dash { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .stats-grid--dash { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .charts-grid { grid-template-columns: 1fr; }
+}
+
+/* Two-up distribution charts (Return Risk + Churn Risk) */
+.dist-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .dist-charts { grid-template-columns: 1fr; } }
+
+/* ── Mobile table scroll ────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0 0 14px 14px;
+}
+
+/* ── Divider ────────────────────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* ── Smooth theme colour transitions ────────────────────────────────────────── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exclude framer-motion and SVGs from CSS transitions to avoid conflicts */
+[data-framer-motion], svg, img, canvas {
+  transition: none !important;
+}
