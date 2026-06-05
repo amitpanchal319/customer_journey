@@ -26,12 +26,13 @@ function ChannelDonut({ f }) {
         <PieChart width={126} height={126}>
           <Pie data={data} cx={63} cy={63} innerRadius={44} outerRadius={58}
             startAngle={90} endAngle={-270} dataKey="value" strokeWidth={0}>
-            <Cell fill="#0c8de4" />
+            <Cell fill="var(--accent)" />
             <Cell fill="var(--border)" />
           </Pie>
         </PieChart>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-          <div style={{ fontSize: 24, fontWeight: 800, color: '#0c8de4', lineHeight: 1 }}>{pct}%</div>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', textAlign: 'center', pointerEvents: 'none' }}>
+          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent)', lineHeight: 1 }}>{pct}%</div>
           <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>90-day retention</div>
         </div>
       </div>
@@ -50,11 +51,11 @@ function ChannelDonut({ f }) {
 }
 
 function cellColor(pct, isM0) {
-  if (isM0) return { bg: '#0c8de4', color: '#fff' }
+  if (isM0) return { bg: 'var(--accent)', color: '#fff' }
   if (!pct || pct === 0) return { bg: 'transparent', color: 'var(--text-muted)' }
   const opacity = Math.max(0.08, Math.min(0.9, pct / 12))
   return {
-    bg: `rgba(12, 141, 228, ${opacity})`,
+    bg: `rgba(110, 130, 56, ${opacity})`,
     color: opacity > 0.45 ? '#fff' : 'var(--text-primary)',
   }
 }
@@ -290,8 +291,8 @@ export default function CohortsPage() {
               />
               <ReferenceLine y={5} stroke="var(--border-strong)" strokeDasharray="4 4"
                 label={{ value: 'avg ~5%', position: 'right', fontSize: 10, fill: 'var(--text-muted)' }} />
-              <Line type="monotone" dataKey="pct" stroke="#0c8de4" strokeWidth={2}
-                dot={{ r: 4, fill: '#0c8de4' }} activeDot={{ r: 6 }} />
+              <Line type="monotone" dataKey="pct" stroke="var(--accent)" strokeWidth={2}
+                dot={{ r: 4, fill: 'var(--accent)' }} activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>
         )}

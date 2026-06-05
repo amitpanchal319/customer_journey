@@ -87,8 +87,8 @@ export default function ChannelPage({ channelFilter, title, subtitle, color = 'b
                 <XAxis dataKey="customer_type" tick={{ fontSize: 12, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} tickFormatter={v => `₹${v}`} />
                 <Tooltip contentStyle={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12 }} formatter={v => `₹${v}`} />
-                <Bar dataKey="avg_ebo_aov"    name="EBO AOV"    fill="var(--amber)"  radius={[4,4,0,0]} />
-                <Bar dataKey="avg_online_aov" name="Online AOV" fill="var(--accent)" radius={[4,4,0,0]} />
+                <Bar dataKey="avg_ebo_aov"    name="EBO AOV"    fill="var(--amber)"  radius={[4,4,0,0]} maxBarSize={40} />
+                <Bar dataKey="avg_online_aov" name="Online AOV" fill="var(--accent)" radius={[4,4,0,0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           )}

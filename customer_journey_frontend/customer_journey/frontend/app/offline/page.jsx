@@ -101,7 +101,7 @@ export default function OfflinePage() {
                     tickFormatter={v=>`₹${v}`}/>
                   <Tooltip contentStyle={{background:'var(--bg-card)',border:'1px solid var(--border)',
                     borderRadius:8,fontSize:12}} formatter={v=>[`₹${v}`,'EBO AOV']}/>
-                  <Bar dataKey="avg_ebo_aov" name="EBO AOV" fill="var(--amber)" radius={[4,4,0,0]}>
+                  <Bar dataKey="avg_ebo_aov" name="EBO AOV" fill="var(--amber)" radius={[4,4,0,0]} maxBarSize={46}>
                     <LabelList dataKey="avg_ebo_aov" position="top"
                       formatter={v=>`₹${v}`} style={{fontSize:11,fill:'var(--text-muted)'}}/>
                   </Bar>

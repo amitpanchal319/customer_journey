@@ -1,95 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Design tokens: Olive & Beach ───────────────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Libas Customer Intelligence
+   Enterprise SaaS aesthetic (Stripe / Salesforce / Databricks inspired).
+   Light mode keeps the warm olive-&-sand brand; dark mode is a soft, layered
+   slate surface system (never pure black) tuned for long-session readability.
+   ════════════════════════════════════════════════════════════════════════════ */
 :root {
   --font-display : 'Space Grotesk', sans-serif;
   --font-body    : 'DM Sans', sans-serif;
   --font-mono    : 'JetBrains Mono', monospace;
 
-  /* Light mode — warm beach sand & olive grove */
-  --bg-base       : #F4F1E8;   /* sun-bleached sand */
-  --bg-card       : #FEFCF5;   /* warm white parchment */
-  --bg-subtle     : #ECE8DC;   /* sand dune */
-  --bg-hover      : #E2DDD0;   /* deeper dune */
-  --sidebar-bg    : #EEEAE0;   /* sidebar: warmer than base */
+  /* Radii — consistent rounding scale */
+  --radius-sm : 8px;
+  --radius-md : 12px;
+  --radius-lg : 16px;
+  --radius-xl : 20px;
 
-  --border        : #D6D0C0;
-  --border-strong : #BEB79E;
+  /* ── Light mode — warm parchment & olive grove ── */
+  --bg-base       : #F5F2EA;   /* app canvas */
+  --bg-card       : #FFFFFF;   /* raised surface */
+  --bg-subtle     : #EFEBE0;   /* inset / secondary surface */
+  --bg-hover      : #E7E1D3;   /* hover wash */
+  --sidebar-bg    : #595340;   /* sidebar: crisp, near-white */
 
-  --text-primary  : #1C1A12;   /* warm dark ink */
-  --text-secondary: #58523C;   /* muted olive-brown */
-  --text-muted    : #96906C;   /* sandy muted */
+  --border        : #E2DCCC;
+  --border-strong : #C9C2AC;
 
-  /* Primary accent: olive green */
-  --accent        : #617038;
-  --accent-hover  : #4E5C2C;
-  --accent-light  : #E2ECC8;
-  --accent-subtle : #F0F5E4;
+  --text-primary  : #1B1A14;
+  --text-secondary: #595340;
+  --text-muted    : #948D70;
 
-  /* Secondary accent: beach sand gold */
+  /* Primary accent: olive (matches the sidebar's bright-olive highlight) */
+  --accent        : #6E8238;
+  --accent-hover  : #5C6E2E;
+  --accent-light  : #E8EFD2;   /* tinted surface (active nav, focus) */
+  --accent-subtle : #F2F6E6;
+
+  /* Secondary accent: sand gold */
   --sand          : #B89650;
-  --sand-light    : #F8F0DC;
-  --sand-dark     : #967840;
+  --sand-light    : #F7EFD9;
+  --sand-dark     : #8F7136;
 
-  /* Semantic colours — warm-tuned */
-  --green         : #3A6E34;
-  --green-light   : #DAF0D0;
-  --amber         : #A07A10;
-  --amber-light   : #F8EED0;
-  --red           : #B84040;
-  --red-light     : #FBE4E0;
-  --purple        : #725490;
-  --purple-light  : #EAE4F4;
-  --teal          : #287A6E;
-  --teal-light    : #D0EEE8;
+  /* Semantic colours */
+  --green         : #3A7A3C;
+  --green-light   : #DCF0D6;
+  --amber         : #9A7410;
+  --amber-light   : #F8EDCC;
+  --red           : #C0413E;
+  --red-light     : #FBE3DF;
+  --purple        : #6E54A0;
+  --purple-light  : #EAE3F6;
+  --teal          : #1F7A6E;
+  --teal-light    : #CFEEE7;
+  --blue          : #2C6BBF;
+  --blue-light    : #DBE9F8;
 
-  /* Shadows — warm-tinted */
+  /* Elevation — soft, warm-tinted */
+  --shadow-xs    : 0 1px 2px rgba(28,26,14,0.05);
   --shadow-sm    : 0 1px 3px rgba(28,26,14,0.07), 0 1px 2px rgba(28,26,14,0.04);
-  --shadow-md    : 0 4px 16px rgba(28,26,14,0.09), 0 2px 4px rgba(28,26,14,0.05);
-  --shadow-lg    : 0 12px 40px rgba(28,26,14,0.12), 0 4px 8px rgba(28,26,14,0.06);
+  --shadow-md    : 0 6px 20px rgba(28,26,14,0.08), 0 2px 6px rgba(28,26,14,0.05);
+  --shadow-lg    : 0 16px 44px rgba(28,26,14,0.12), 0 6px 12px rgba(28,26,14,0.06);
+  --ring         : 0 0 0 3px var(--accent-light);
 }
 
 .dark {
-  /* Dark mode — midnight olive */
-  --bg-base       : #10130D;
-  --bg-card       : #171C12;
-  --bg-subtle     : #1F2618;
-  --bg-hover      : #293220;
-  --sidebar-bg    : #131710;
+  /* ── Dark mode — layered slate / charcoal (no pure black) ── */
+  --bg-base       : #0E1117;   /* deepest canvas */
+  --bg-card       : #171C26;   /* raised surface */
+  --bg-subtle     : #1E2430;   /* inset / secondary surface */
+  --bg-hover      : #283040;   /* hover wash */
+  --sidebar-bg    : #0B0E14;   /* sidebar: one step deeper than canvas */
 
-  --border        : #2A341C;
-  --border-strong : #3C4C26;
+  --border        : #262D3A;
+  --border-strong : #38414F;
 
-  --text-primary  : #ECE8D4;   /* warm cream */
-  --text-secondary: #A4A07A;   /* warm olive-sand */
-  --text-muted    : #585840;
+  --text-primary  : #E8EBF1;   /* soft off-white, not #fff */
+  --text-secondary: #A6AEBF;
+  --text-muted    : #6E7787;
 
-  --accent        : #8CAE40;   /* bright olive for dark bg */
-  --accent-hover  : #A4C858;
-  --accent-light  : #1A2410;
-  --accent-subtle : #141C0C;
+  /* Primary accent: brightened olive that pops on slate */
+  --accent        : #9DBE4F;
+  --accent-hover  : #B2D265;
+  --accent-light  : #1F2A14;   /* dark olive tint surface */
+  --accent-subtle : #18200F;
 
-  --sand          : #C0A050;
-  --sand-light    : #28200A;
-  --sand-dark     : #E0BC6A;
+  --sand          : #CBA85A;
+  --sand-light    : #2A2310;
+  --sand-dark     : #E2C06E;
 
-  --green         : #54BA58;
-  --green-light   : #0C2610;
-  --amber         : #DCA838;
-  --amber-light   : #261E08;
-  --red           : #F07070;
-  --red-light     : #2A0A0A;
-  --purple        : #B07CD0;
-  --purple-light  : #1C0A32;
-  --teal          : #38C0B0;
-  --teal-light    : #041E1A;
+  --green         : #57C268;
+  --green-light   : #122913;
+  --amber         : #E0AE3E;
+  --amber-light   : #2A2009;
+  --red           : #F1736F;
+  --red-light     : #2C1414;
+  --purple        : #B58CE0;
+  --purple-light  : #1E1430;
+  --teal          : #3CC6B4;
+  --teal-light    : #08221E;
+  --blue          : #5FA0E8;
+  --blue-light    : #0E1E30;
 
-  --shadow-sm    : 0 1px 3px rgba(0,0,0,0.32);
-  --shadow-md    : 0 4px 16px rgba(0,0,0,0.42);
-  --shadow-lg    : 0 12px 40px rgba(0,0,0,0.58);
+  /* Elevation — deep, diffuse (dark UIs need stronger ambient shadow) */
+  --shadow-xs    : 0 1px 2px rgba(0,0,0,0.40);
+  --shadow-sm    : 0 1px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.30);
+  --shadow-md    : 0 8px 24px rgba(0,0,0,0.50), 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-lg    : 0 20px 50px rgba(0,0,0,0.62), 0 8px 16px rgba(0,0,0,0.40);
+  --ring         : 0 0 0 3px rgba(157,190,79,0.22);
 }
 
 /* ── Base reset ─────────────────────────────────────────────────────────────── */
@@ -105,13 +126,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height     : 100dvh;
+  letter-spacing : -0.005em;
 }
 
 /* ── Scrollbar ──────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); background-clip: content-box; }
 
 /* ── Focus ring ─────────────────────────────────────────────────────────────── */
 :focus-visible {
@@ -120,21 +147,75 @@ body {
   border-radius: 4px;
 }
 
+/* ── Sidebar scope ──────────────────────────────────────────────────────────────
+   The navigation rail is a rich OLIVE-brand surface (brighter in light mode,
+   deeper in dark mode) with warm cream text. Tabs are clean & monochrome at rest;
+   the active tab is an eye-catching cream chip with a pop of accent + gold marker.
+   Scoped CSS variables cascade to every inline style inside the sidebar. */
+.app-sidebar {
+  --sidebar-bg    : linear-gradient(180deg, #36441C 0%, #2E3A14 55%, #263010 100%);
+
+  /* Raised tab "cards" on the dark-olive rail */
+  --nav-card-bg     : rgba(255,255,255,0.08);
+  --nav-card-border : rgba(255,255,255,0.14);
+  --nav-card-hover  : rgba(255,255,255,0.15);
+  --nav-active-bg   : #6E8238;             /* reversed: bright olive (active card) */
+  --nav-active-border: rgba(255,255,255,0.30);
+  --nav-icon-bg     : rgba(255,255,255,0.16);
+
+  /* Bright-olive action button (Sign Out / primary CTA) — pops on the dark rail */
+  --signout-bg      : #6E8238;
+  --signout-hover   : #7E9444;
+
+  --bg-card       : rgba(255,255,255,0.10);
+  --bg-subtle     : #bcb39a;
+  --bg-hover      : rgba(255,255,255,0.16);
+  --border        : rgba(255,255,255,0.14);
+  --border-strong : rgba(255,255,255,0.26);
+
+  --text-primary  : #FFFFFF;
+  --text-secondary: rgba(255,255,255,0.82);
+  --text-muted    : rgba(255,255,255,0.55);
+
+  /* Bright accent palette so the active icon chip pops */
+  --accent       : #C7DE7E;  --accent-hover: #D6E993;
+  --blue         : #6BB0F2;
+  --teal         : #45D2BF;
+  --purple       : #C49CEC;
+  --green        : #6BD27A;
+  --amber        : #ECC25A;
+  --red          : #F58A86;
+  --sand         : #EBCB7A;  --sand-dark: #EBCB7A;
+}
+
+/* Even darker olive rail in dark mode; highlights stay a touch deeper */
+.dark .app-sidebar {
+  --sidebar-bg    : linear-gradient(180deg, #29330F 0%, #20290B 55%, #181F08 100%);
+  --nav-card-bg   : rgba(255,255,255,0.06);
+  --nav-active-bg : #5C6E2E;
+  --signout-bg    : #5C6E2E;
+  --signout-hover : #6E8238;
+}
+
 /* ── Cards ──────────────────────────────────────────────────────────────────── */
 .card {
   background    : var(--bg-card);
   border        : 1px solid var(--border);
-  border-radius : 14px;
-  transition    : border-color 0.2s, box-shadow 0.2s;
+  border-radius : var(--radius-lg);
+  transition    : border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
   box-shadow    : var(--shadow-sm);
 }
 .card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+
+/* Interactive card (clickable) — lifts on hover */
+.card-interactive { cursor: pointer; }
+.card-interactive:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 
 /* Premium card variant — subtle top accent stripe */
 .card-premium {
   background    : var(--bg-card);
   border        : 1px solid var(--border);
-  border-radius : 14px;
+  border-radius : var(--radius-lg);
   box-shadow    : var(--shadow-sm);
   overflow      : hidden;
   position      : relative;
@@ -143,88 +224,108 @@ body {
   content        : '';
   position       : absolute;
   top            : 0; left: 0; right: 0;
-  height         : 2px;
+  height         : 3px;
   background     : linear-gradient(90deg, var(--accent) 0%, var(--sand) 100%);
-  opacity        : 0.7;
+}
+
+/* Soft inset surface (e.g. info strips, code blocks) */
+.surface-inset {
+  background    : var(--bg-subtle);
+  border        : 1px solid var(--border);
+  border-radius : var(--radius-md);
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
 .badge {
   display        : inline-flex;
   align-items    : center;
+  gap            : 5px;
   padding        : 3px 10px;
-  border-radius  : 20px;
+  border-radius  : 999px;
   font-size      : 11px;
   font-weight    : 600;
-  letter-spacing : 0.03em;
+  letter-spacing : 0.02em;
   white-space    : nowrap;
+  line-height    : 1.5;
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
 .btn-primary {
+  display       : inline-flex;
+  align-items   : center;
+  justify-content: center;
+  gap           : 7px;
   background    : var(--accent);
   color         : #fff;
   padding       : 9px 18px;
-  border-radius : 8px;
+  border-radius : var(--radius-sm);
   font-size     : 13px;
   font-weight   : 600;
   border        : none;
   cursor        : pointer;
-  transition    : background 0.2s, transform 0.1s, box-shadow 0.2s;
+  transition    : background 0.2s ease, transform 0.08s ease, box-shadow 0.2s ease, filter 0.2s ease;
   min-height    : 38px;
   white-space   : nowrap;
   letter-spacing: 0.01em;
+  box-shadow    : var(--shadow-xs);
 }
-.btn-primary:hover  { background: var(--accent-hover); box-shadow: 0 4px 14px rgba(97,112,56,0.38); }
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:hover  { background: var(--accent-hover); box-shadow: 0 6px 18px rgba(94,110,52,0.34); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; transform: none; }
 
 .btn-ghost {
-  background    : transparent;
+  border-block: solid 2px #ff000054 !important;
+  display       : inline-flex;
+  align-items   : center;
+  justify-content: center;
+  gap           : 7px;
+  background    : var(--bg-card);
   color         : var(--text-secondary);
   padding       : 9px 14px;
-  border-radius : 8px;
+  border-radius : var(--radius-sm);
   font-size     : 13px;
   font-weight   : 500;
   border        : 1px solid var(--border);
   cursor        : pointer;
-  transition    : all 0.2s;
+  transition    : all 0.18s ease;
   min-height    : 38px;
   white-space   : nowrap;
+  box-shadow    : var(--shadow-xs);
 }
 .btn-ghost:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
-.btn-ghost:active { transform: scale(0.97); }
+.btn-ghost:active { transform: scale(0.98); }
 
 .btn-sand {
   background    : var(--sand-light);
   color         : var(--sand-dark);
   padding       : 9px 18px;
-  border-radius : 8px;
+  border-radius : var(--radius-sm);
   font-size     : 13px;
   font-weight   : 600;
-  border        : 1px solid rgba(184,150,80,0.3);
+  border        : 1px solid color-mix(in srgb, var(--sand) 35%, transparent);
   cursor        : pointer;
-  transition    : all 0.2s;
+  transition    : all 0.2s ease;
   min-height    : 38px;
 }
 .btn-sand:hover { background: var(--sand); color: #fff; }
 
 /* ── Input ──────────────────────────────────────────────────────────────────── */
 .input {
-  background    : var(--bg-subtle);
+  background    : var(--bg-card);
   border        : 1.5px solid var(--border);
-  border-radius : 8px;
+  border-radius : var(--radius-sm);
   padding       : 9px 14px;
   font-size     : 14px;
   font-family   : var(--font-body);
   color         : var(--text-primary);
   outline       : none;
-  transition    : border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  transition    : border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   width         : 100%;
   min-height    : 42px;
 }
 .input:focus {
   border-color  : var(--accent);
-  box-shadow    : 0 0 0 3px var(--accent-light);
+  box-shadow    : var(--ring);
   background    : var(--bg-card);
 }
 .input::placeholder { color: var(--text-muted); }
@@ -257,15 +358,15 @@ body {
 .seg-lost       { background: #ECE6D4; color: #564E38; }
 .seg-occasional { background: #DCF0E0; color: #245A30; }
 
-.dark .seg-champion   { background: #26200A; color: #DCA838; }
-.dark .seg-loyal      { background: #0C2210; color: #54BA58; }
-.dark .seg-new        { background: #0A1C2C; color: #5CA8E0; }
-.dark .seg-promising  { background: #1C0C32; color: #B07CD0; }
-.dark .seg-need       { background: #261408; color: #F07840; }
-.dark .seg-risk       { background: #280808; color: #F07070; }
-.dark .seg-cannot     { background: #260818; color: #E070A0; }
-.dark .seg-lost       { background: #1E1C12; color: #908060; }
-.dark .seg-occasional { background: #081C10; color: #38C090; }
+.dark .seg-champion   { background: #2A2208; color: #E6B43E; }
+.dark .seg-loyal      { background: #0F2814; color: #5FC86A; }
+.dark .seg-new        { background: #0E2236; color: #6CB2EC; }
+.dark .seg-promising  { background: #211640; color: #B58CE0; }
+.dark .seg-need       { background: #2A1808; color: #F08A4C; }
+.dark .seg-risk       { background: #2E1010; color: #F1736F; }
+.dark .seg-cannot     { background: #2C0E20; color: #EC7AAA; }
+.dark .seg-lost       { background: #22222C; color: #9AA0B0; }
+.dark .seg-occasional { background: #0A2216; color: #44C89A; }
 
 /* ── Skeleton shimmer ───────────────────────────────────────────────────────── */
 @keyframes shimmer {
@@ -284,8 +385,8 @@ body {
 
 /* ── Page content responsive padding ───────────────────────────────────────── */
 .page-content {
-  padding   : 32px 36px;
-  max-width : 1400px;
+  padding   : 32px 40px;
+  max-width : 1480px;
   margin    : 0 auto;
 }
 
@@ -295,7 +396,7 @@ body {
 
 @media (max-width: 767px) {
   .page-content { padding: 16px 14px; }
-  .card { border-radius: 10px; }
+  .card { border-radius: 12px; }
   .btn-primary, .btn-ghost { min-height: 44px; padding: 10px 16px; font-size: 14px; }
   .input { min-height: 46px; font-size: 16px; /* prevents iOS zoom */ }
   .badge { font-size: 10px; padding: 2px 8px; }
@@ -305,7 +406,7 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 14px;
+  gap: 16px;
   align-items: stretch;
 }
 .stats-grid > * { min-width: 0; }
@@ -315,7 +416,7 @@ body {
 }
 
 /* Dashboard stat row: 6 cards in one row on desktop, collapsing gracefully */
-.stats-grid--dash { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.stats-grid--dash { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
 @media (max-width: 1024px) { .stats-grid--dash { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 560px)  { .stats-grid--dash { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
@@ -333,11 +434,19 @@ body {
 .dist-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 @media (max-width: 760px) { .dist-charts { grid-template-columns: 1fr; } }
 
-/* ── Mobile table scroll ────────────────────────────────────────────────────── */
+/* ── Tables — enterprise data grid ──────────────────────────────────────────── */
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border-radius: 0 0 14px 14px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+/* Shared polish for any <table> rendered inside a .card — sticky header with a
+   solid backing so rows scroll cleanly beneath it. */
+.card table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  z-index: 1;
 }
 
 /* ── Divider ────────────────────────────────────────────────────────────────── */
@@ -346,6 +455,13 @@ body {
   background: var(--border);
   margin: 20px 0;
 }
+
+/* ── Entrance animation utility ─────────────────────────────────────────────── */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise 0.4s ease both; }
 
 /* ── Smooth theme colour transitions ────────────────────────────────────────── */
 *, *::before, *::after {
@@ -357,4 +473,12 @@ body {
 /* Exclude framer-motion and SVGs from CSS transitions to avoid conflicts */
 [data-framer-motion], svg, img, canvas {
   transition: none !important;
+}
+
+/* ── Recharts: olive-green elevation under bar-chart bars ────────────────────── */
+.recharts-bar-rectangle path {
+  filter: drop-shadow(0 3px 5px rgba(110, 130, 56, 0.40));
+}
+.dark .recharts-bar-rectangle path {
+  filter: drop-shadow(0 3px 6px rgba(157, 190, 79, 0.30));
 }

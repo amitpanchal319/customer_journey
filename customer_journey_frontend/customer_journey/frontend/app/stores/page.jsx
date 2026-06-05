@@ -544,11 +544,12 @@ export default function StoresPage() {
           {/* Top stores bar chart */}
           <div className="card" style={{ padding:24, marginBottom:20 }}>
             <div style={{ fontSize:14, fontWeight:600, marginBottom:16 }}>Top 10 Stores by Customers</div>
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart data={stores.slice(0,10)} layout="vertical"
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={stores.slice(0,10)} layout="vertical" barCategoryGap="22%"
+                margin={{ top: 4, right: 16, bottom: 4, left: 4 }}
                 onClick={d => d?.activePayload && setSelected(d.activePayload[0].payload)}>
                 <XAxis type="number" tick={{fontSize:11,fill:'var(--text-muted)'}} axisLine={false} tickLine={false} tickFormatter={fmtN}/>
-                <YAxis type="category" dataKey="store_name" tick={{fontSize:11,fill:'var(--text-muted)'}} axisLine={false} tickLine={false} width={160}/>
+                <YAxis type="category" dataKey="store_name" interval={0} tick={{fontSize:11,fill:'var(--text-muted)'}} axisLine={false} tickLine={false} width={170}/>
                 <Tooltip contentStyle={{background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:8,fontSize:12}}/>
                 <Bar dataKey="total_customers" name="Customers" fill="var(--accent)" radius={[0,4,4,0]} cursor="pointer"/>
               </BarChart>

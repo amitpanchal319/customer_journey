@@ -39,7 +39,9 @@ export default function OnlinePage() {
     Promise.all([
       api.getFrequency({ channel_journey: CHANNEL, ...monthParam }),
       api.getAOVComparison({ channel_journey: CHANNEL, ...monthParam }),
-      api.getCategory({ channel: CHANNEL, ...monthParam }),
+      // Category breakdown: show the full category list (unfiltered by channel) so
+      // online matches offline — "Online Only" customers alone cover few categories.
+      api.getCategory({ ...monthParam }),
     ]).then(([f, a, c]) => {
       if (cancelled) return
       setFreq(f || [])
@@ -99,7 +101,7 @@ export default function OnlinePage() {
                   tickFormatter={v=>`₹${v}`}/>
                 <Tooltip contentStyle={{background:'var(--bg-card)',border:'1px solid var(--border)',
                   borderRadius:8,fontSize:12}} formatter={v=>[`₹${v}`,'Online AOV']}/>
-                <Bar dataKey="avg_online_aov" name="Online AOV" fill="var(--accent)" radius={[4,4,0,0]}>
+                <Bar dataKey="avg_online_aov" name="Online AOV" fill="var(--accent)" radius={[4,4,0,0]} maxBarSize={46}>
                   <LabelList dataKey="avg_online_aov" position="top"
                     formatter={v=>`₹${v}`} style={{fontSize:11,fill:'var(--text-muted)'}}/>
                 </Bar>

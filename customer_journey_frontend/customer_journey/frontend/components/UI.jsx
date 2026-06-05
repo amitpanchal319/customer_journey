@@ -206,12 +206,13 @@ export function Table({ columns, rows, onRowClick }) {
     <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
         <thead>
-          <tr style={{ borderBottom: '1px solid var(--border)' }}>
+          <tr style={{ borderBottom: '2px solid var(--border)' }}>
             {columns.map(col => (
               <th key={col.key} style={{
-                padding: '10px 14px', textAlign: 'left', fontSize: 11,
-                fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase',
-                letterSpacing: '0.06em', whiteSpace: 'nowrap',
+                padding: '11px 16px', textAlign: 'left', fontSize: 10.5,
+                fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase',
+                letterSpacing: '0.07em', whiteSpace: 'nowrap',
+                background: 'var(--bg-subtle)',
               }}>{col.label}</th>
             ))}
           </tr>
@@ -230,7 +231,7 @@ export function Table({ columns, rows, onRowClick }) {
               transition={{ duration: 0.1 }}
             >
               {columns.map(col => (
-                <td key={col.key} style={{ padding: '11px 14px', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
+                <td key={col.key} style={{ padding: '12px 16px', color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
                   {col.render ? col.render(row[col.key], row) : (row[col.key] ?? '—')}
                 </td>
               ))}
