@@ -1,0 +1,24 @@
+# Keep the backend image small and the build context clean.
+.git
+.gitignore
+.env
+*.env
+!.env.example
+
+# Frontend lives in its own image
+customer_journey_frontend
+
+# Python noise
+__pycache__/
+**/__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Runtime / local
+logs/
+*.log
+.vscode/
+.idea/
+.DS_Store

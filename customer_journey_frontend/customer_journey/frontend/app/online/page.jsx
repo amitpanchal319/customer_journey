@@ -25,7 +25,7 @@ const MONTH_OPTIONS = getMonthOptions()
 
 export default function OnlinePage() {
   const [freq,        setFreq]        = useState([])
-  const [aov,         setAov]         = useState([])
+  const [custType,    setCustType]    = useState([])
   const [cat,         setCat]         = useState([])
   const [loading,     setLoading]     = useState(true)
   const [month,       setMonth]       = useState('')
@@ -45,7 +45,7 @@ export default function OnlinePage() {
     ]).then(([f, a, c]) => {
       if (cancelled) return
       setFreq(f || [])
-      setAov(a || [])
+      setCustType(a || [])
       setCat((c || []).sort((x,y) => y.customers - x.customers))
     }).finally(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
@@ -86,24 +86,35 @@ export default function OnlinePage() {
 
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, marginBottom:20 }}>
 
-        {/* AOV — Online only */}
+        {/* Online Customers count — New vs Repeat */}
         <div className="card" style={{ padding:24 }}>
-          <div style={{ fontSize:14, fontWeight:600, marginBottom:4 }}>Online AOV — New vs Repeat{month ? ` · ${monthLabel}` : ''}</div>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:8, marginBottom:4 }}>
+            <div style={{ fontSize:14, fontWeight:600 }}>Online Customers — New vs Repeat{month ? ` · ${monthLabel}` : ''}</div>
+            <a
+              href={api.getExportUrl({ channel_journey: CHANNEL, months: month })}
+              title={`Download online customers CSV${month ? ` · ${monthLabel}` : ''}`}
+              className="seg-export-btn"
+              style={{ display:'inline-flex', alignItems:'center', justifyContent:'center',
+                width:30, height:30, borderRadius:8, color:'var(--text-secondary)',
+                border:'1px solid var(--border)', textDecoration:'none', flexShrink:0 }}>
+              <Download size={15}/>
+            </a>
+          </div>
           <div style={{ fontSize:12, color:'var(--text-muted)', marginBottom:16 }}>
-            Average Shopify order value by customer type
+            Count of Shopify-only customers by customer type
           </div>
           {loading ? <CardSkeleton rows={4}/> : (
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={aov}>
+              <BarChart data={custType}>
                 <XAxis dataKey="customer_type" tick={{fontSize:12,fill:'var(--text-muted)'}}
                   axisLine={false} tickLine={false}/>
                 <YAxis tick={{fontSize:11,fill:'var(--text-muted)'}} axisLine={false} tickLine={false}
-                  tickFormatter={v=>`₹${v}`}/>
+                  tickFormatter={fmtN}/>
                 <Tooltip contentStyle={{background:'var(--bg-card)',border:'1px solid var(--border)',
-                  borderRadius:8,fontSize:12}} formatter={v=>[`₹${v}`,'Online AOV']}/>
-                <Bar dataKey="avg_online_aov" name="Online AOV" fill="var(--accent)" radius={[4,4,0,0]} maxBarSize={46}>
-                  <LabelList dataKey="avg_online_aov" position="top"
-                    formatter={v=>`₹${v}`} style={{fontSize:11,fill:'var(--text-muted)'}}/>
+                  borderRadius:8,fontSize:12}} formatter={v=>[Number(v).toLocaleString('en-IN'),'Customers']}/>
+                <Bar dataKey="customers" name="Customers" fill="var(--accent)" radius={[4,4,0,0]} maxBarSize={46}>
+                  <LabelList dataKey="customers" position="top"
+                    formatter={fmtN} style={{fontSize:11,fill:'var(--text-muted)'}}/>
                 </Bar>
               </BarChart>
             </ResponsiveContainer>

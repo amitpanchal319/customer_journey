@@ -29,6 +29,23 @@ _ALLOWED_TABLES = {
     "refresh_log",
 }
 
+# item_master camelCase columns that MUST be double-quoted in Postgres. Weak models
+# (e.g. the small SQL-fallback model) often forget the quotes, so we add them here
+# deterministically — Postgres folds an unquoted "itemCategoryCode" to lowercase and
+# then errors "column ... does not exist".
+_CAMEL_COLS = ("itemNo", "shopifySKU", "itemCategoryCode", "subCategory", "sizeNew",
+               "seasonNew", "designType", "occassion", "imageUrl")
+
+
+def quote_camel_columns(sql: str) -> str:
+    """Wrap known camelCase item_master columns in double quotes if left unquoted.
+    Case-insensitive match, canonical (correct-case) quoted replacement — so it also
+    repairs wrong-cased names like 'itemcategorycode'."""
+    for col in _CAMEL_COLS:
+        sql = re.sub(rf'(?<!")\b{col}\b(?!")', f'"{col}"', sql, flags=re.IGNORECASE)
+    return sql
+
+
 DEFAULT_LIMIT       = 1000
 STATEMENT_TIMEOUT_MS = 20000
 
@@ -50,6 +67,9 @@ def sanitize_sql(sql: str, default_limit: int = DEFAULT_LIMIT) -> str:
     first = sql.split()[0].upper()
     if first not in ("SELECT", "WITH"):
         raise GuardrailError(f"Only SELECT/WITH queries are allowed (got {first}).")
+
+    # Repair unquoted camelCase columns before any model's SQL reaches Postgres.
+    sql = quote_camel_columns(sql)
 
     if _FORBIDDEN.search(sql):
         raise GuardrailError("Query contains a forbidden (write/DDL/unsafe) keyword.")

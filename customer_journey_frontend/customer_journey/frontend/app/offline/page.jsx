@@ -4,7 +4,6 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } 
 import { Download, Calendar } from 'lucide-react'
 import { api } from '../../lib/api'
 import { PageHeader, CardSkeleton, Table, Empty } from '../../components/UI'
-import EBOAgent from '../../components/EBOAgent'
 
 function fmt(n)  { if(!n&&n!==0) return '—'; if(n>=10000000) return `₹${(n/10000000).toFixed(1)}Cr`; if(n>=100000) return `₹${(n/100000).toFixed(1)}L`; if(n>=1000) return `₹${(n/1000).toFixed(1)}K`; return `₹${n}` }
 function fmtN(n) { if(!n&&n!==0) return '—'; if(n>=10000000) return `${(n/10000000).toFixed(1)}Cr`; if(n>=100000) return `${(n/100000).toFixed(1)}L`; if(n>=1000) return `${(n/1000).toFixed(1)}K`; return `${n}` }
@@ -185,11 +184,6 @@ export default function OfflinePage() {
             />
           )}
         </div>
-      </div>
-
-      {/* EBO AI Agent — kept as-is */}
-      <div style={{ padding:'0 36px 40px', maxWidth:1400, margin:'0 auto' }}>
-        <EBOAgent storeName="" />
       </div>
     </div>
   )

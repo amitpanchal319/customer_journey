@@ -792,8 +792,21 @@ def agent_v2_query(req: AgentV2Request):
     """
     if not (req.question or "").strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
-    from api.agent_graph.graph import run_agent          # lazy import (avoids circular)
-    return run_agent(req.question.strip(), req.store_name, req.history)
+    # Never let an exception escape as an opaque HTTP 500 (the frontend then fails
+    # to JSON-parse "Internal Server Error"). Return a structured error instead and
+    # log the real traceback so the cause is visible in the server logs.
+    try:
+        from api.agent_graph.graph import run_agent      # lazy import (avoids circular)
+        return run_agent(req.question.strip(), req.store_name, req.history)
+    except Exception as e:
+        import logging, traceback
+        logging.getLogger("agent").error("v2/query failed:\n%s", traceback.format_exc())
+        return {
+            "status": "error",
+            "error": "Sorry, something went wrong. Please try again.",
+            "answer": "", "sql": "", "columns": [], "rows": [], "row_count": 0,
+            "store_scope": req.store_name, "tools_used": [], "image": None,
+        }
 
 
 @router.post("/v2/export-csv")
